@@ -110,7 +110,7 @@ class AlpacaProcessor:
                     ]
             tmp_df = tmp_df.astype(float)
             tmp_df["tic"] = tic
-            new_df = new_df.append(tmp_df)
+            new_df = pd.concat([new_df,tmp_df])
 
         new_df = new_df.reset_index()
         new_df = new_df.rename(columns={"index": "timestamp"})
@@ -150,7 +150,7 @@ class AlpacaProcessor:
                 temp_indicator["date"] = df[df.tic == unique_ticker[i]][
                     "date"
                 ].to_list()
-                indicator_df = indicator_df.append(temp_indicator, ignore_index=True)
+                indicator_df = pd.concat([indicator_df,temp_indicator], ignore_index=True)
             df = df.merge(
                 indicator_df[["tic", "date", indicator]], on=["tic", "date"], how="left"
             )
@@ -273,7 +273,7 @@ class AlpacaProcessor:
             barset = self.api.get_bars([tic], time_interval, limit=limit).df#[tic]
             barset["tic"] = tic
             barset = barset.reset_index()
-            data_df = data_df.append(barset)
+            data_df = pd.concat([data_df,barset])
 
         data_df = data_df.reset_index(drop=True)
         start_time = data_df.timestamp.min()
@@ -329,7 +329,7 @@ class AlpacaProcessor:
                     ]
             tmp_df = tmp_df.astype(float)
             tmp_df["tic"] = tic
-            new_df = new_df.append(tmp_df)
+            new_df = pd.concat([new_df,tmp_df])
 
         new_df = new_df.reset_index()
         new_df = new_df.rename(columns={"index": "timestamp"})
