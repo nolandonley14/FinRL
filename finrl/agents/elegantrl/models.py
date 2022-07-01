@@ -56,6 +56,7 @@ class DRLAgent:
             raise NotImplementedError("NotImplementedError")
         model = Arguments(agent=agent, env=env)
         model.if_off_policy = model_name in OFF_POLICY_MODELS
+        model.if_use_per = False
         if model_kwargs is not None:
             try:
                 model.learning_rate = model_kwargs["learning_rate"]
